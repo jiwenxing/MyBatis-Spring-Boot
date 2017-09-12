@@ -24,10 +24,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <dependency>
+        <!-- <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
+        </dependency> -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
@@ -68,23 +68,23 @@
             <artifactId>jackson-module-parameter-names</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.0.11</version>
-        </dependency>
-
         <!--mybatis-->
-        <dependency>
+        <!-- <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>RELEASE</version>
-        </dependency>
+        </dependency> -->
         <!--mapper-->
         <dependency>
             <groupId>tk.mybatis</groupId>
             <artifactId>mapper-spring-boot-starter</artifactId>
             <version>RELEASE</version>
+            <exclusions>
+            	<exclusion>
+            		<groupId>org.apache.tomcat</groupId>
+            		<artifactId>tomcat-jdbc</artifactId>
+            	</exclusion>
+            </exclusions>
         </dependency>
         <!--pagehelper-->
         <dependency>
@@ -92,13 +92,13 @@
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>RELEASE</version>
         </dependency>
-
+        <!-- 这个依赖主要可以在代码中轻松的使用@ConfigurationProperties注解注入属性文件配置的属性值 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-
+        <!-- Druid是一个JDBC组件库(和tomcat-jdbc连接池作用相同)，包括数据库连接池、SQL Parser等组件。DruidDataSource是最好的数据库连接池。 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>

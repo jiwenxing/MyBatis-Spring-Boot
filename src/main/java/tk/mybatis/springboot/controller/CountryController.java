@@ -27,6 +27,7 @@ package tk.mybatis.springboot.controller;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,7 +49,14 @@ public class CountryController {
     @Autowired
     private CountryService countryService;
 
-    @RequestMapping
+    /**
+     * for method 'getAll', both way1 & way2 work well, way1(ModelAndView approach) is historically from pre-spring2.0
+     * and way2 is more towards convention oriented. prefer way2
+     * reference: https://stackoverflow.com/questions/7175509/which-is-better-return-modelandview-or-string-on-spring3-controller  
+     */
+    
+    // way1: old way
+    /*@RequestMapping
     public ModelAndView getAll(Country country) {
         ModelAndView result = new ModelAndView("index");
         List<Country> countryList = countryService.getAll(country);
@@ -57,6 +65,17 @@ public class CountryController {
         result.addObject("page", country.getPage());
         result.addObject("rows", country.getRows());
         return result;
+    }*/
+    
+    // way2: new way
+    @RequestMapping
+    public String getAll(Model model, Country country) {
+        List<Country> countryList = countryService.getAll(country);
+        model.addAttribute("pageInfo", new PageInfo<Country>(countryList));
+        model.addAttribute("queryParam", country);
+        model.addAttribute("page", country.getPage());
+        model.addAttribute("rows", country.getRows());
+        return "index";
     }
 
     @RequestMapping(value = "/add")
