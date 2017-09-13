@@ -93,13 +93,28 @@ public class CountryController {
         return result;
     }
 
+    /**
+     * 这里注意RedirectAttributes的使用，在页面跳转时主要作用有两个：
+     * 1. addAttribute 方法添加的属性跳转时将会被自动拼到url的参数里带过去
+     * 2. addFlashAttribute 方法添加的属性在跳转后的视图模板里也可以获取
+     */
+    
     @RequestMapping(value = "/delete/{id}")
+    public String delete(@PathVariable Integer id, RedirectAttributes ra) {
+        countryService.deleteById(id);
+        ra.addFlashAttribute("msg", "删除成功!");
+        ra.addFlashAttribute("code", "100001!");
+        ra.addAttribute("from", "delete");
+        return "redirect:/countries";
+    }
+    
+    /*@RequestMapping(value = "/delete/{id}")
     public ModelAndView delete(@PathVariable Integer id, RedirectAttributes ra) {
         ModelAndView result = new ModelAndView("redirect:/countries");
         countryService.deleteById(id);
         ra.addFlashAttribute("msg", "删除成功!");
         return result;
-    }
+    }*/
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ModelAndView save(Country country) {

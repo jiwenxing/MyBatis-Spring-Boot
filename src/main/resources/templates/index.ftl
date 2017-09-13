@@ -111,6 +111,7 @@
             <#if msg??>
                 <tr style="color:red;">
                     <th colspan="5">${msg}</th>
+                    <th colspan="5">${code}</th>
                 </tr>
             </#if>
         </table>

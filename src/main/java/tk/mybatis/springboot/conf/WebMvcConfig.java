@@ -25,7 +25,9 @@
 package tk.mybatis.springboot.conf;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
@@ -35,8 +37,33 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
+	/**
+	 * 自定义静态资源静态资源映射目录，也可以在配置文件中设置，很多情况下默认即可
+	 * 参考：http://tengj.top/2017/03/30/springboot6/
+	 */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
     }
+    
+    /**
+     * 对于一些没有后台交互的静态页面，就不用写Controller去映射页面了，直接addViewController即可
+     */
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/index").setViewName("redirect:countries");
+    }
+    
+    /**
+     * 重写addCorsMappings方法实现跨域的设置
+     * 当然跨域还可以通过在Controller或方法上添加‘@CrossOrigin("http://domain2.com")’的注解实现，不过下面这种方便统一管理
+     * 参考：https://docs.spring.io/spring/docs/current/spring-framework-reference/html/cors.html
+     */
+    @Override
+	public void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/api/**")
+			.allowedOrigins("http://domain2.com")
+			.allowedMethods("GET", "DELETE")
+			.allowCredentials(false).maxAge(3600);
+	}
 }
