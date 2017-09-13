@@ -26,9 +26,12 @@ package tk.mybatis.springboot.conf;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import tk.mybatis.springboot.interceptor.MyInterceptor;
 
 /**
  * @author liuzh
@@ -61,9 +64,25 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
      */
     @Override
 	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/api/**")
-			.allowedOrigins("http://domain2.com")
+		registry.addMapping("/cities/**")
+			.allowedOrigins("http://jverson.com")
 			.allowedMethods("GET", "DELETE")
-			.allowCredentials(false).maxAge(3600);
+			.allowCredentials(true).maxAge(3600);
 	}
+    
+    //全局跨域，Enabling CORS for the whole application is as simple as:
+    /*@Override
+	public void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/**");
+	}*/
+    
+    /**
+     * 添加自定义拦截器
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        // addPathPatterns 用于添加拦截规则
+        // excludePathPatterns 用户排除拦截
+        registry.addInterceptor(new MyInterceptor()).addPathPatterns("/**").excludePathPatterns("/cities","/login");
+    }
 }

@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,6 +44,7 @@ import tk.mybatis.springboot.service.CityService;
  * @author liuzh
  * @since 2015-12-19 11:10
  */
+@CrossOrigin(origins = "http://jverson.com", maxAge = 3600) //支持跨域
 @RestController
 @RequestMapping("/cities")
 public class CityController {
@@ -50,6 +52,7 @@ public class CityController {
     @Autowired
     private CityService cityService;
 
+    @CrossOrigin("http://domain2.com") //单个方法支持跨域
     @RequestMapping
     public PageInfo<City> getAll(City city) {
         List<City> countryList = cityService.getAll(city);
