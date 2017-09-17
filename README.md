@@ -1,3 +1,11 @@
+
+# Introduction
+
+fork自common mapper作者，演示了Spring Boot集成MyBatis,分页插件 PageHelper,通用 Mapper的完整示例。示例用如下一个简单的web页面完整的实现了common mapper包含增删改查、分页等基本用法。简单的erp或者web项目都可以参考该demo实现，但是注意demo并没有进行web和service的分层。
+
+![](http://7xry05.com1.z0.glb.clouddn.com/201709170941_430.png)
+
+
 # Spring Boot 集成 MyBatis, 分页插件 PageHelper, 通用 Mapper 
 
 - [Spring Boot 1.5.1.RELEASE](https://github.com/spring-projects/spring-boot)
